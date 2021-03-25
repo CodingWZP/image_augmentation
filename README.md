@@ -1,7 +1,6 @@
 # image_augmentation
 Image augmentation and change bounding box at the same time.
 
-@[TOC](image_augmentation)
 # 安装依赖库和imgaug库
 在训练yolo的时候，对已有数据集已经打好了标签，想要进行数据的增强（数据扩增），可以通过imgaug实现对图片和标签中的boundingbox同时变换。
 [imgaug使用文档](https://imgaug.readthedocs.io/en/latest/index.html)
