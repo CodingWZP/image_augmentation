@@ -104,7 +104,7 @@ new_bndbox_list = []
 
 # 使用示例
 ## 数据准备
-输入数据为两个文件夹一个是需要增强的影像数据（JPEGImages），一个是对应的xml文件（Annotations）。==注意：影像文件名需和xml文件名相对应！==
+输入数据为两个文件夹一个是需要增强的影像数据（JPEGImages），一个是对应的xml文件（Annotations）。注意：影像文件名需和xml文件名相对应！
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210325164244643.png)![在这里插入图片描述](https://img-blog.csdnimg.cn/20210325164202912.png)
 ## 设置文件路径
 
