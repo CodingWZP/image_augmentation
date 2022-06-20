@@ -19,26 +19,44 @@ pip install imgaug
 读取xml文件并使用ElementTree对xml文件进行解析，找到每个object的坐标值。
 
 ```python
-def change_xml_annotation(root, image_id, new_target):
-    new_xmin = new_target[0]
-    new_ymin = new_target[1]
-    new_xmax = new_target[2]
-    new_ymax = new_target[3]
-
+def change_xml_list_annotation(root, image_id, new_target, saveroot, id):
     in_file = open(os.path.join(root, str(image_id) + '.xml'))  # 这里root分别由两个意思
     tree = ET.parse(in_file)
+    #修改增强后的xml文件中的filename
+    elem = tree.find('filename')
+    elem.text = (str(id) + '.jpg')
     xmlroot = tree.getroot()
-    object = xmlroot.find('object')
-    bndbox = object.find('bndbox')
-    xmin = bndbox.find('xmin')
-    xmin.text = str(new_xmin)
-    ymin = bndbox.find('ymin')
-    ymin.text = str(new_ymin)
-    xmax = bndbox.find('xmax')
-    xmax.text = str(new_xmax)
-    ymax = bndbox.find('ymax')
-    ymax.text = str(new_ymax)
-    tree.write(os.path.join(root, str("%06d" % (str(id) + '.xml'))))
+    #修改增强后的xml文件中的path
+    elem = tree.find('path')
+    if elem != None:
+        elem.text = (saveroot + str(id) + '.jpg')
+
+    index = 0
+    for object in xmlroot.findall('object'):  # 找到root节点下的所有country节点
+        bndbox = object.find('bndbox')  # 子节点下节点rank的值
+
+        # xmin = int(bndbox.find('xmin').text)
+        # xmax = int(bndbox.find('xmax').text)
+        # ymin = int(bndbox.find('ymin').text)
+        # ymax = int(bndbox.find('ymax').text)
+
+        new_xmin = new_target[index][0]
+        new_ymin = new_target[index][1]
+        new_xmax = new_target[index][2]
+        new_ymax = new_target[index][3]
+
+        xmin = bndbox.find('xmin')
+        xmin.text = str(new_xmin)
+        ymin = bndbox.find('ymin')
+        ymin.text = str(new_ymin)
+        xmax = bndbox.find('xmax')
+        xmax.text = str(new_xmax)
+        ymax = bndbox.find('ymax')
+        ymax.text = str(new_ymax)
+
+        index = index + 1
+
+    tree.write(os.path.join(saveroot, str(id + '.xml')))
 ```
 
 ## 生成变换序列
