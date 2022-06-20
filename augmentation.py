@@ -35,29 +35,6 @@ def read_xml_annotation(root, image_id):
     return bndboxlist
 
 
-# (506.0000, 330.0000, 528.0000, 348.0000) -> (520.4747, 381.5080, 540.5596, 398.6603)
-def change_xml_annotation(root, image_id, new_target):
-    new_xmin = new_target[0]
-    new_ymin = new_target[1]
-    new_xmax = new_target[2]
-    new_ymax = new_target[3]
-
-    in_file = open(os.path.join(root, str(image_id) + '.xml'))  # 这里root分别由两个意思
-    tree = ET.parse(in_file)
-    xmlroot = tree.getroot()
-    object = xmlroot.find('object')
-    bndbox = object.find('bndbox')
-    xmin = bndbox.find('xmin')
-    xmin.text = str(new_xmin)
-    ymin = bndbox.find('ymin')
-    ymin.text = str(new_ymin)
-    xmax = bndbox.find('xmax')
-    xmax.text = str(new_xmax)
-    ymax = bndbox.find('ymax')
-    ymax.text = str(new_ymax)
-    tree.write(os.path.join(root, str("%06d" % (str(id) + '.xml'))))
-
-
 def change_xml_list_annotation(root, image_id, new_target, saveroot, id):
     in_file = open(os.path.join(root, str(image_id) + '.xml'))  # 这里root分别由两个意思
     tree = ET.parse(in_file)
